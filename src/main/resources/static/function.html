@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Find Students by First Name</h1>
+<form onsubmit="findStudentsByFirstName(event)">
+    <label for="firstName">First Name:</label>
+    <input type="text" id="firstName" name="firstName" required>
+    <button type="submit">Search</button>
+</form>
+
+<h1>Find Courses by Student ID</h1>
+<form onsubmit="findCoursesByStudentId(event)">
+    <label for="studentId">Student ID:</label>
+    <input type="number" id="studentId" name="studentId" required>
+    <button type="submit">Search</button>
+</form>
+
+
+<div id="results"></div>
+</body>
+<script>
+    function displayResults(data) {
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.innerHTML = JSON.stringify(data, null, 2);
+    }
+</script>
+<script>
+    async function findStudentsByFirstName(event) {
+        event.preventDefault();
+
+        const firstName = document.getElementById('firstName').value;
+
+        try {
+            const response = await fetch(`/api/students/firstName/${firstName}`);
+            if (response.ok) {
+                const students = await response.json();
+                displayResults(students);
+            } else {
+                alert('Failed to fetch students');
+            }
+        } catch (error) {
+            alert('An error occurred: ' + error.message);
+        }
+    }
+</script>
+<script>
+    async function findCoursesByStudentId(event) {
+        event.preventDefault();
+
+        const studentId = document.getElementById('studentId').value;
+
+        try {
+            const response = await fetch(`/api/courses/student/${studentId}`);
+            if (response.ok) {
+                const courses = await response.json();
+                displayResults(courses);
+            } else {
+                alert('Failed to fetch courses');
+            }
+        } catch (error) {
+            alert('An error occurred: ' + error.message);
+        }
+    }
+</script>
+</html>
