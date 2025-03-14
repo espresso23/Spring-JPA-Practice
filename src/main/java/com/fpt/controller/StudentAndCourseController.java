@@ -6,6 +6,7 @@ import com.fpt.model.Course;
 import com.fpt.model.Student;
 import com.fpt.service.StudentAndCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -18,13 +19,29 @@ public class StudentAndCourseController {
     @Autowired
     private StudentAndCourseService studentAndCourseService;
 
-    @PostMapping("/students")
+    @PostMapping("/students-json")
     public Student createStudent(@RequestBody StudentCreationRequest request) {
         return studentAndCourseService.createStudent(request);
     }
+    @PostMapping("/students-urlencoded")
+    public Student createStudent(
+            @RequestParam String firstName,
+            @RequestParam String lastName,
+            @RequestParam String address,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate birthday,
+            @RequestParam String phone) {
 
+        StudentCreationRequest request = new StudentCreationRequest();
+        request.setFirstName(firstName);
+        request.setLastName(lastName);
+        request.setAddress(address);
+        request.setBirthday(birthday);
+        request.setPhone(phone);
+
+        return studentAndCourseService.createStudent(request);
+    }
     @PostMapping("/courses")
-    public Course createCourse(@RequestBody CourseCreationRequest request) {
+    public Course createCourse(@RequestBody CourseCreationRequest request) {//@ModelAttribute có tể sử dụng thay cho @RequestBody
         return studentAndCourseService.createCourse(request);
     }
 

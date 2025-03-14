@@ -38,8 +38,8 @@ public class StudentCreationRequest {
         return lastName;
     }
 
-    public void setLastName() {
-        this.lastName = lastName;
+    public void setLastName(String lastName) {
+        this.lastName = this.lastName;
     }
 
     public String getPhone() {
