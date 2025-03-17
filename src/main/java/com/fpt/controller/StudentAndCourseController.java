@@ -21,6 +21,7 @@ public class StudentAndCourseController {
 
     @PostMapping("/students-json")
     public Student createStudent(@RequestBody StudentCreationRequest request) {
+        System.out.println("Received Request: " + request);
         return studentAndCourseService.createStudent(request);
     }
     @PostMapping("/students-urlencoded")

@@ -6,6 +6,7 @@ import com.fpt.model.Course;
 import com.fpt.model.Student;
 import com.fpt.repository.CourseRepository;
 import com.fpt.repository.StudentRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,16 +39,21 @@ public class StudentAndCourseService {
 
     @Transactional
     public Course createCourse(CourseCreationRequest request) {
+        if (request.getStudentID() == null) {
+            throw new IllegalArgumentException("Student ID must not be null");
+        }
+
         Student student = studentRepository.findById(request.getStudentID())
-                .orElseThrow(() -> new RuntimeException("Student not found with id: " + request.getStudentID()));
+                .orElseThrow(() -> new EntityNotFoundException("Student not found with ID: " + request.getStudentID()));
+
         Course course = new Course();
         course.setCourseName(request.getCourseName());
         course.setStartDate(request.getStartDate());
         course.setEndDate(request.getEndDate());
         course.setStudent(student);
+
         return courseRepository.save(course);
     }
-
     public List<Student> findStudentsOlderThan20() {
         return studentRepository.findStudentsOlderThan20();
     }

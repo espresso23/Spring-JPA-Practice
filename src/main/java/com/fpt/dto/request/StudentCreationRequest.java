@@ -39,8 +39,9 @@ public class StudentCreationRequest {
     }
 
     public void setLastName(String lastName) {
-        this.lastName = this.lastName;
+        this.lastName = lastName;
     }
+
 
     public String getPhone() {
         return phone;
