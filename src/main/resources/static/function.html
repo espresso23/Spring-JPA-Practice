@@ -4,6 +4,28 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    table, th, td {
+        border: 1px solid #ccc;
+    }
+
+    th, td {
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+</style>
+
 <body>
 <h1>Find Students by First Name</h1>
 <form onsubmit="findStudentsByFirstName(event)">
@@ -18,6 +40,28 @@
     <input type="number" id="studentId" name="studentId" required>
     <button type="submit">Search</button>
 </form>
+<h2>Find Students Older Than 20</h2>
+<button onclick="findStudentsOlderThan20()">Find Students Older Than 20</button>
+
+<!-- Form để tìm student có tuổi lớn hơn 20 và địa chỉ cụ thể -->
+<h2>Find Students Older Than 20 and Address</h2>
+<form onsubmit="findStudentsOlderThan20AndAddress(event)">
+    <label for="address">Address:</label>
+    <input type="text" id="address" name="address" required><br>
+    <button type="submit">Search</button>
+</form>
+
+<!-- Form để tìm course theo khoảng thời gian -->
+<h2>Find Courses by Duration</h2>
+<form onsubmit="findCoursesByDuration(event)">
+    <label for="startDateSearch">Start Date:</label>
+    <input type="date" id="startDateSearch" name="startDate" required><br>
+
+    <label for="endDateSearch">End Date:</label>
+    <input type="date" id="endDateSearch" name="endDate" required><br>
+
+    <button type="submit">Search</button>
+</form>
 
 
 <div id="results"></div>
@@ -25,10 +69,32 @@
 <script>
     function displayResults(data) {
         const resultsDiv = document.getElementById('results');
-        resultsDiv.innerHTML = JSON.stringify(data, null, 2);
+
+        if (Array.isArray(data) && data.length > 0) {
+            // Lấy các trường (columns) từ object đầu tiên trong mảng
+            const columns = Object.keys(data[0]);
+
+            // Tạo bảng HTML
+            let tableHtml = '<table>';
+            tableHtml += '<thead><tr>' + columns.map(col => `<th>${col}</th>`).join('') + '</tr></thead>';
+            tableHtml += '<tbody>';
+            data.forEach(row => {
+                tableHtml += '<tr>' + columns.map(col => `<td>${row[col]}</td>`).join('') + '</tr>';
+            });
+            tableHtml += '</tbody></table>';
+
+            resultsDiv.innerHTML = tableHtml;
+        } else {
+            // Hiển thị thông báo nếu không có dữ liệu
+            resultsDiv.innerHTML = '<p>No data available to display</p>';
+        }
     }
-</script>
-<script>
+
+    // function displayResults(data) {
+    //     const resultsDiv = document.getElementById('results');
+    //     resultsDiv.innerHTML = JSON.stringify(data, null, 2);
+    // }
+
     async function findStudentsByFirstName(event) {
         event.preventDefault();
 
@@ -46,8 +112,7 @@
             alert('An error occurred: ' + error.message);
         }
     }
-</script>
-<script>
+
     async function findCoursesByStudentId(event) {
         event.preventDefault();
 
@@ -55,6 +120,59 @@
 
         try {
             const response = await fetch(`/api/courses/student/${studentId}`);
+            if (response.ok) {
+                const courses = await response.json();
+                displayResults(courses);
+            } else {
+                alert('Failed to fetch courses');
+            }
+        } catch (error) {
+            alert('An error occurred: ' + error.message);
+        }
+    }
+
+    async function findStudentsOlderThan20() {
+        try {
+            const response = await fetch('/api/students/older-than-20');
+            if (response.ok) {
+                const students = await response.json();
+                displayResults(students);
+            } else {
+                alert('Failed to fetch students');
+            }
+        } catch (error) {
+            alert('An error occurred: ' + error.message);
+        }
+    }
+
+    // Tìm student có tuổi lớn hơn 20 và địa chỉ cụ thể
+    async function findStudentsOlderThan20AndAddress(event) {
+        event.preventDefault();
+
+        const address = document.getElementById('address').value;
+
+        try {
+            const response = await fetch(`/api/students/older-than-20-and-address/${address}`);
+            if (response.ok) {
+                const students = await response.json();
+                displayResults(students);
+            } else {
+                alert('Failed to fetch students');
+            }
+        } catch (error) {
+            alert('An error occurred: ' + error.message);
+        }
+    }
+
+    // Tìm course theo khoảng thời gian
+    async function findCoursesByDuration(event) {
+        event.preventDefault();
+
+        const startDate = document.getElementById('startDateSearch').value;
+        const endDate = document.getElementById('endDateSearch').value;
+
+        try {
+            const response = await fetch(`/api/courses/duration?startDate=${startDate}&endDate=${endDate}`);
             if (response.ok) {
                 const courses = await response.json();
                 displayResults(courses);
