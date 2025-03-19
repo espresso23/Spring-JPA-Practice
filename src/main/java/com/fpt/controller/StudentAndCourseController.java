@@ -76,4 +76,27 @@ public class StudentAndCourseController {
         return studentAndCourseService.findCoursesByStudentId(studentId);
     }
 
+    // Update student
+    @PutMapping("/students/{studentId}")
+    public Student updateStudent(@PathVariable Integer studentId, @RequestBody StudentCreationRequest request) {
+        return studentAndCourseService.updateStudent(studentId, request);
+    }
+
+    // Delete student
+    @DeleteMapping("/students/{studentId}")
+    public void deleteStudent(@PathVariable Integer studentId) {
+        studentAndCourseService.deleteStudent(studentId);
+    }
+
+    // Update course
+    @PutMapping("/courses/{courseId}")
+    public Course updateCourse(@PathVariable Integer courseId, @RequestBody CourseCreationRequest request) {
+        return studentAndCourseService.updateCourse(courseId, request);
+    }
+
+    // Delete course
+    @DeleteMapping("/courses/{courseId}")
+    public void deleteCourse(@PathVariable Integer courseId) {
+        studentAndCourseService.deleteCourse(courseId);
+    }
 }

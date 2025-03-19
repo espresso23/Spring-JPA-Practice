@@ -75,4 +75,51 @@ public class StudentAndCourseService {
     public List<Course> findCoursesByStudentId(Integer studentId) {
         return courseRepository.findCoursesByStudentId(studentId);
     }
+
+    @Transactional
+    public Student updateStudent(Integer studentId, StudentCreationRequest request) {
+        Student student = studentRepository.findById(studentId)
+                .orElseThrow(() -> new EntityNotFoundException("Student not found with ID: " + studentId));
+        
+        student.setLastName(request.getLastName());
+        student.setFirstName(request.getFirstName());
+        student.setPhone(request.getPhone());
+        student.setBirthday(request.getBirthday());
+        student.setAddress(request.getAddress());
+        
+        return studentRepository.save(student);
+    }
+
+    @Transactional
+    public void deleteStudent(Integer studentId) {
+        Student student = studentRepository.findById(studentId)
+                .orElseThrow(() -> new EntityNotFoundException("Student not found with ID: " + studentId));
+        
+        // Xóa tất cả các course liên quan đến student
+        List<Course> courses = courseRepository.findCoursesByStudentId(studentId);
+        courseRepository.deleteAll(courses);
+        
+        // Sau đó xóa student
+        studentRepository.delete(student);
+    }
+
+    @Transactional
+    public Course updateCourse(Integer courseId, CourseCreationRequest request) {
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new EntityNotFoundException("Course not found with ID: " + courseId));
+        
+        course.setCourseName(request.getCourseName());
+        course.setStartDate(request.getStartDate());
+        course.setEndDate(request.getEndDate());
+        
+        return courseRepository.save(course);
+    }
+
+    @Transactional
+    public void deleteCourse(Integer courseId) {
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new EntityNotFoundException("Course not found with ID: " + courseId));
+        courseRepository.delete(course);
+    }
+
 }
