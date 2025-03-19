@@ -26,6 +26,8 @@
    ```
 3. Đợi ứng dụng khởi động hoàn tất
 
+Hoặc chỉ cần nhấn "Run" là được.
+
 ## Các trang web có sẵn
 
 ### 1. Trang đăng ký học sinh (index.html)
