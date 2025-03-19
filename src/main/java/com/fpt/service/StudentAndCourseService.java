@@ -16,11 +16,16 @@ import java.util.List;
 
 @Service
 public class StudentAndCourseService {
-    @Autowired
+
     private StudentRepository studentRepository;
 
-    @Autowired
     private CourseRepository courseRepository;
+
+    @Autowired
+    public StudentAndCourseService(StudentRepository studentRepository, CourseRepository courseRepository) {
+        this.studentRepository = studentRepository;
+        this.courseRepository = courseRepository;
+    }
 
     public List<Student> findStudentsByFirstName(String firstName) {
         return studentRepository.findByFirstName(firstName);
@@ -54,6 +59,7 @@ public class StudentAndCourseService {
 
         return courseRepository.save(course);
     }
+
     public List<Student> findStudentsOlderThan20() {
         return studentRepository.findStudentsOlderThan20();
     }
