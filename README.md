@@ -30,8 +30,8 @@ Hoặc chỉ cần nhấn "Run" là được.
 
 ## Các trang web có sẵn
 
-### 1. Trang đăng ký học sinh (index.html)
-- Truy cập: `http://localhost:8080/index.html`
+### 1. Trang đăng ký học sinh (addStudent.html)
+- Truy cập: `http://localhost:8080/addStudent.html`
 - Chức năng: Thêm học sinh mới
 - Các trường thông tin:
   - First Name (Tên)
@@ -71,6 +71,7 @@ Hoặc chỉ cần nhấn "Run" là được.
      - Nhập ngày bắt đầu vào ô Start Date
      - Nhập ngày kết thúc vào ô End Date
      - Click nút Search
+  6. **Update và Delete Học sinh và Khóa học**
 
 ## API Endpoints
 
