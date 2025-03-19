@@ -2,6 +2,7 @@ package com.fpt.model;
 
 
 import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.time.Period;
 
@@ -10,7 +11,7 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
+    @Column(columnDefinition = "NVARCHAR(255)")
     private String firstName;
     private String lastName;
     private String address;

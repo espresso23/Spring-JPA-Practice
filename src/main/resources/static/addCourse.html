@@ -4,10 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Course</title>
+    <style>
+        .error {
+            color: red;
+            font-size: 0.8em;
+        }
+    </style>
     <script>
-        async function submitCourseForm(event) {
-            event.preventDefault(); // Ngăn chặn form gửi dữ liệu theo cách thông thường
+        function validateCourseForm(event) {
+            // Ngăn chặn form gửi dữ liệu
+            event.preventDefault();
 
+            // Xóa các thông báo lỗi trước đó
+            const errorMessages = document.querySelectorAll('.error');
+            errorMessages.forEach(error => error.textContent = '');
+
+            let isValid = true;
+
+            // Lấy dữ liệu các trường
+            const courseName = document.getElementById("courseName").value.trim();
+            const startDate = document.getElementById("startDate").value;
+            const endDate = document.getElementById("endDate").value;
+            const studentID = document.getElementById("studentID").value.trim();
+
+            // Validate Course Name
+            if (!courseName || !/^[a-zA-Z0-9\s]+$/.test(courseName)) {
+                document.getElementById("courseNameError").textContent = "Course name is required and must contain only letters, numbers, and spaces.";
+                isValid = false;
+            }
+
+            // Validate Start Date (must be today or in the future)
+            if (!startDate || new Date(startDate) < new Date()) {
+                document.getElementById("startDateError").textContent = "Start date must be today or in the future.";
+                isValid = false;
+            }
+
+            // Validate End Date (must be after the start date)
+            if (!endDate || new Date(endDate) <= new Date(startDate)) {
+                document.getElementById("endDateError").textContent = "End date must be after the start date.";
+                isValid = false;
+            }
+
+            // Validate Student ID (must be a positive number)
+            if (!studentID || !/^\d+$/.test(studentID) || parseInt(studentID) <= 0) {
+                document.getElementById("studentIDError").textContent = "Student ID is required and must be a positive number.";
+                isValid = false;
+            }
+
+            // Nếu tất cả hợp lệ, gửi form
+            if (isValid) {
+                submitCourseForm(event); // Gọi hàm submit form
+            }
+        }
+
+        async function submitCourseForm(event) {
             const formData = new FormData(event.target);
             const data = Object.fromEntries(formData.entries());
 
@@ -34,18 +84,26 @@
 </head>
 <body>
 <h1>Add Course</h1>
-<form onsubmit="submitCourseForm(event)">
+<form onsubmit="validateCourseForm(event)">
     <label for="courseName">Course Name:</label>
-    <input type="text" id="courseName" name="courseName" required><br><br>
+    <input type="text" id="courseName" name="courseName" required>
+    <div id="courseNameError" class="error"></div>
+    <br><br>
 
     <label for="startDate">Start Date:</label>
-    <input type="date" id="startDate" name="startDate" required><br><br>
+    <input type="date" id="startDate" name="startDate" required>
+    <div id="startDateError" class="error"></div>
+    <br><br>
 
     <label for="endDate">End Date:</label>
-    <input type="date" id="endDate" name="endDate" required><br><br>
+    <input type="date" id="endDate" name="endDate" required>
+    <div id="endDateError" class="error"></div>
+    <br><br>
 
     <label for="studentID">Student ID:</label>
-    <input type="number" id="studentID" name="studentID" required><br><br>
+    <input type="number" id="studentID" name="studentID" required>
+    <div id="studentIDError" class="error"></div>
+    <br><br>
 
     <button type="submit">Add Course</button>
 </form>
