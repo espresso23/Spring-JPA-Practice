@@ -9,6 +9,7 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(columnDefinition = "NVARCHAR(255)")
     private String courseName;
     private LocalDate startDate;
     private LocalDate endDate;
@@ -16,6 +17,7 @@ public class Course {
     @ManyToOne
     @JoinColumn(name = "student_id")
     private Student student;
+
 
     public Course() {
     }
@@ -26,6 +28,7 @@ public class Course {
         this.endDate = endDate;
         this.student = student;
     }
+
 
     // Getter và Setter
     public int getId() {

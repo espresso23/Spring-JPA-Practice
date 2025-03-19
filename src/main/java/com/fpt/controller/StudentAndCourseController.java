@@ -66,9 +66,7 @@ public class StudentAndCourseController {
 
     // Tìm course theo khoảng thời gian
     @GetMapping("/courses/duration")
-    public List<Course> findCoursesByDuration(
-            @RequestParam LocalDate startDate,
-            @RequestParam LocalDate endDate) {
+    public List<Course> findCoursesByDuration(@RequestParam LocalDate startDate, @RequestParam LocalDate endDate) {
         return studentAndCourseService.findCoursesByDuration(startDate, endDate);
     }
 

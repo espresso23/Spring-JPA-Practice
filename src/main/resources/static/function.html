@@ -67,6 +67,46 @@
 <div id="results"></div>
 </body>
 <script>
+    function displayResultsCourseDuration(data) {
+        const resultsDiv = document.getElementById('results');
+
+        if (Array.isArray(data) && data.length > 0) {
+            // Define table headers
+            let tableHtml = `
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Course Name</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Student Full Name</th>
+                        <th>Student Age</th>
+                        <th>Student Phone</th>
+                        <th>Student Address</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+
+            // Loop through each course and extract data for each column
+            data.forEach(course => {
+                tableHtml += `
+                <tr>
+                    <td>${course.courseName}</td>
+                    <td>${course.startDate}</td>
+                    <td>${course.endDate}</td>
+                    <td>${course.student ? course.student.fullName : 'N/A'}</td>  <!-- Display Full Name -->
+                    <td>${course.student ? course.student.age : 'N/A'}</td>  <!-- Display Age -->
+                    <td>${course.student ? course.student.phone : 'N/A'}</td>  <!-- Display Phone -->
+                    <td>${course.student ? course.student.address : 'N/A'}</td>  <!-- Display Address -->
+                </tr>`;
+            });
+
+            tableHtml += `</tbody></table>`;
+            resultsDiv.innerHTML = tableHtml;
+        } else {
+            resultsDiv.innerHTML = '<p>No data available to display</p>';
+        }
+    }
     function displayResults(data) {
         const resultsDiv = document.getElementById('results');
 
@@ -165,17 +205,29 @@
     }
 
     // Tìm course theo khoảng thời gian
+    // Tìm course theo khoảng thời gian với validation
     async function findCoursesByDuration(event) {
         event.preventDefault();
 
         const startDate = document.getElementById('startDateSearch').value;
         const endDate = document.getElementById('endDateSearch').value;
 
+        // Validation
+        if (!startDate || !endDate) {
+            alert('Both start date and end date are required.');
+            return;
+        }
+
+        if (new Date(startDate) > new Date(endDate)) {
+            alert('Start date must be before or equal to the end date.');
+            return;
+        }
+
         try {
             const response = await fetch(`/api/courses/duration?startDate=${startDate}&endDate=${endDate}`);
             if (response.ok) {
                 const courses = await response.json();
-                displayResults(courses);
+                displayResultsCourseDuration(courses);
             } else {
                 alert('Failed to fetch courses');
             }
