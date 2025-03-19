@@ -14,6 +14,16 @@ public class JpapracticeApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(JpapracticeApplication.class, args);
+		openHomePage(); // Mở trang web chính (localhost:8080/spmvc/addStudent) khi chạy chương trình
+	}
+
+	public static void openHomePage() {
+		Runtime runtime = Runtime.getRuntime();
+		try {
+			runtime.exec("rundll32 url.dll,FileProtocolHandler " + "http://localhost:8080/spmvc/addStudent");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

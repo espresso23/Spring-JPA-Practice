@@ -200,7 +200,7 @@
         const firstName = document.getElementById('firstName').value;
 
         try {
-            const response = await fetch(`/api/students/firstName/${firstName}`);
+            const response = await fetch(`/spmvc/api/students/firstName/${firstName}`);
             if (response.ok) {
                 const students = await response.json();
                 displayResults(students);
@@ -218,7 +218,7 @@
         const studentId = document.getElementById('studentId').value;
 
         try {
-            const response = await fetch(`/api/courses/student/${studentId}`);
+            const response = await fetch(`/spmvc/api/courses/student/${studentId}`);
             if (response.ok) {
                 const courses = await response.json();
                 displayResultsCourse(courses);
@@ -232,7 +232,7 @@
 
     async function findStudentsOlderThan20() {
         try {
-            const response = await fetch('/api/students/older-than-20');
+            const response = await fetch('/spmvc/api/students/older-than-20');
             if (response.ok) {
                 const students = await response.json();
                 displayResults(students);
@@ -251,7 +251,7 @@
         const address = document.getElementById('address').value;
 
         try {
-            const response = await fetch(`/api/students/older-than-20-and-address/${address}`);
+            const response = await fetch(`/spmvc/api/students/older-than-20-and-address/${address}`);
             if (response.ok) {
                 const students = await response.json();
                 displayResults(students);
@@ -283,7 +283,7 @@
         }
 
         try {
-            const response = await fetch(`/api/courses/duration?startDate=${startDate}&endDate=${endDate}`);
+            const response = await fetch(`/spmvc/api/courses/duration?startDate=${startDate}&endDate=${endDate}`);
             if (response.ok) {
                 const courses = await response.json();
                 displayResultsCourse(courses);
@@ -309,7 +309,7 @@
         };
 
         try {
-            const response = await fetch(`/api/students/${studentId}`, {
+            const response = await fetch(`/spmvc/api/students/${studentId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -336,7 +336,7 @@
         const studentId = document.getElementById('deleteStudentId').value;
 
         try {
-            const response = await fetch(`/api/students/${studentId}`, {
+            const response = await fetch(`/spmvc/api/students/${studentId}`, {
                 method: 'DELETE'
             });
 
@@ -362,7 +362,7 @@
         };
 
         try {
-            const response = await fetch(`/api/courses/${courseId}`, {
+            const response = await fetch(`/spmvc/api/courses/${courseId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -389,7 +389,7 @@
         const courseId = document.getElementById('deleteCourseId').value;
 
         try {
-            const response = await fetch(`/api/courses/${courseId}`, {
+            const response = await fetch(`/spmvc/api/courses/${courseId}`, {
                 method: 'DELETE'
             });
 

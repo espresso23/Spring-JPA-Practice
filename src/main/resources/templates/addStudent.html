@@ -69,7 +69,7 @@
             const data = Object.fromEntries(formData.entries());
 
             try {
-                const response = await fetch('/api/students-json', {
+                const response = await fetch('/spmvc/api/students-json', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
