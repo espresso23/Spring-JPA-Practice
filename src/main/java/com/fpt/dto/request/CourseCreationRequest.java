@@ -1,6 +1,5 @@
 package com.fpt.dto.request;
 
-import com.fpt.model.Student;
 
 import java.time.LocalDate;
 

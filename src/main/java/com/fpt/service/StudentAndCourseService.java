@@ -31,11 +31,19 @@ public class StudentAndCourseService {
         return studentRepository.findByFirstName(firstName);
     }
 
+    public Student findStudentById(Integer id) {
+        return studentRepository.findStudentById(id);
+    }
+
+    public Course findCourseById(Integer id) {
+        return courseRepository.findCourseById(id);
+    }
+
     @Transactional
     public Student createStudent(StudentCreationRequest request) {
         Student student = new Student();
-        student.setLastName(request.getLastName());
         student.setFirstName(request.getFirstName());
+        student.setLastName(request.getLastName());
         student.setPhone(request.getPhone());
         student.setBirthday(request.getBirthday());
         student.setAddress(request.getAddress());
@@ -80,13 +88,13 @@ public class StudentAndCourseService {
     public Student updateStudent(Integer studentId, StudentCreationRequest request) {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new EntityNotFoundException("Student not found with ID: " + studentId));
-        
+
         student.setLastName(request.getLastName());
         student.setFirstName(request.getFirstName());
         student.setPhone(request.getPhone());
         student.setBirthday(request.getBirthday());
         student.setAddress(request.getAddress());
-        
+
         return studentRepository.save(student);
     }
 
@@ -94,11 +102,11 @@ public class StudentAndCourseService {
     public void deleteStudent(Integer studentId) {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new EntityNotFoundException("Student not found with ID: " + studentId));
-        
+
         // Xóa tất cả các course liên quan đến student
         List<Course> courses = courseRepository.findCoursesByStudentId(studentId);
         courseRepository.deleteAll(courses);
-        
+
         // Sau đó xóa student
         studentRepository.delete(student);
     }
@@ -107,11 +115,11 @@ public class StudentAndCourseService {
     public Course updateCourse(Integer courseId, CourseCreationRequest request) {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new EntityNotFoundException("Course not found with ID: " + courseId));
-        
+
         course.setCourseName(request.getCourseName());
         course.setStartDate(request.getStartDate());
         course.setEndDate(request.getEndDate());
-        
+
         return courseRepository.save(course);
     }
 

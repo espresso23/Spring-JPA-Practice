@@ -8,7 +8,6 @@ import com.fpt.service.StudentAndCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -25,6 +24,7 @@ public class StudentAndCourseController {
         System.out.println("Received Request: " + request);
         return studentAndCourseService.createStudent(request);
     }
+
     @PostMapping("/students-urlencoded")
     public Student createStudent(
             @RequestParam String firstName,
@@ -42,8 +42,10 @@ public class StudentAndCourseController {
 
         return studentAndCourseService.createStudent(request);
     }
+
     @PostMapping("/courses")
-    public Course createCourse(@RequestBody CourseCreationRequest request) {//@ModelAttribute có tể sử dụng thay cho @RequestBody
+    public Course createCourse(@RequestBody CourseCreationRequest request) {// @ModelAttribute có tể sử dụng thay cho
+        // @RequestBody
         return studentAndCourseService.createCourse(request);
     }
 
@@ -75,6 +77,16 @@ public class StudentAndCourseController {
     @GetMapping("/courses/student/{studentId}")
     public List<Course> findCoursesByStudentId(@PathVariable Integer studentId) {
         return studentAndCourseService.findCoursesByStudentId(studentId);
+    }
+
+    @GetMapping("/students/{studentId}")
+    public Student findStudentById(@PathVariable Integer studentId) {
+        return studentAndCourseService.findStudentById(studentId);
+    }
+
+    @GetMapping("/courses/{courseId}")
+    public Course findCourseById(@PathVariable Integer courseId) {
+        return studentAndCourseService.findCourseById(courseId);
     }
 
     // Update student
