@@ -1,7 +1,7 @@
 # Hướng dẫn sử dụng dự án JPA Practice
 
 ## Yêu cầu hệ thống
-- Chống chỉ định MacOS
+- Chống chỉ định MacOS dùng MSSQL SERVER
 - JDK 17 trở lên
 - Maven
 - SQL Server
