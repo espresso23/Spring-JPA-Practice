@@ -32,7 +32,7 @@ Hoặc chỉ cần nhấn "Run" là được.
 ## Các trang web có sẵn
 
 ### 1. Trang đăng ký học sinh (addStudent.html)
-- Truy cập: `http://localhost:8080/addStudent.html`
+- Truy cập: `http://localhost:8080/spmvc/addStudent`
 - Chức năng: Thêm học sinh mới
 - Các trường thông tin:
   - First Name (Tên)
@@ -42,7 +42,7 @@ Hoặc chỉ cần nhấn "Run" là được.
   - Phone (Số điện thoại)
 
 ### 2. Trang thêm khóa học (addCourse.html)
-- Truy cập: `http://localhost:8080/addCourse.html`
+- Truy cập: `http://localhost:8080/spmvc/addCourse`
 - Chức năng: Thêm khóa học mới
 - Các trường thông tin:
   - Course Name (Tên khóa học)
@@ -51,7 +51,7 @@ Hoặc chỉ cần nhấn "Run" là được.
   - Student ID (ID học sinh)
 
 ### 3. Trang tìm kiếm (function.html)
-- Truy cập: `http://localhost:8080/function.html`
+- Truy cập: `http://localhost:8080/spmvc/function`
 - Các chức năng tìm kiếm:
   1. **Tìm học sinh theo tên**
      - Nhập tên học sinh vào ô First Name
