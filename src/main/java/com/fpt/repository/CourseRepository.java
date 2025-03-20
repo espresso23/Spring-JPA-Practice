@@ -9,9 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 public interface CourseRepository extends JpaRepository<Course, Integer> {
     // 4. Tìm course theo khoảng thời gian (duration)
-//    @Query("SELECT c FROM Course c WHERE c.startDate >= :startDate AND c.endDate <= :endDate")
-//    List<Course> findCoursesByDuration(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
-    @Query("SELECT c, s FROM Course c JOIN c.student s WHERE c.startDate >= :startDate AND c.endDate <= :endDate")
+    @Query("SELECT c FROM Course c WHERE c.startDate >= :startDate AND c.endDate <= :endDate")
     List<Course> findCoursesByDuration(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
     // 5. Tìm tất cả course của một student cụ thể (theo studentID)
