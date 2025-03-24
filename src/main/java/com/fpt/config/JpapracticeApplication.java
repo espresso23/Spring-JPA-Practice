@@ -1,4 +1,4 @@
-package com.fpt.jpapractice;
+package com.fpt.config;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,7 +20,7 @@ public class JpapracticeApplication {
 	public static void openHomePage() {
 		Runtime runtime = Runtime.getRuntime();
 		try {
-			runtime.exec("rundll32 url.dll,FileProtocolHandler " + "http://localhost:8080/spmvc/addStudent");
+			runtime.exec("rundll32 url.dll,FileProtocolHandler " + "http://localhost:8080/spmvc/index.html");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

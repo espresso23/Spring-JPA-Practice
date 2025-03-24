@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký Làm Thêm</title>
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<script>
+    function loadError() {
+        fetch('spmvc/api/test-error')
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById("error-message").innerText = data.error;
+                }
+            });
+    }
+</script>
+<body>
+<p id="errorMessage" style="color: red;"></p>
+
+<h1>Đăng Ký Làm Thêm</h1>
+
+<form id="dangKyForm">
+    <label for="maDK">Mã Đăng Kí</label>
+    <input type="text" id="maDK" name="maDK" required>
+    <br/>
+    <label for="maNV">Mã NV:</label>
+    <input type="text" id="maNV" name="maNV" required><br/>
+
+    <label for="hoTen">Họ Tên:</label>
+    <input type="text" id="hoTen" name="hoTen" required><br/>
+
+    <label for="gioiTinh">Giới Tính:</label>
+    <select id="gioiTinh" name="gioiTinh">
+        <option value="Nam">Nam</option>
+        <option value="Nữ">Nữ</option>
+    </select><br/>
+
+    <label for="capBac">Cấp Bậc:</label>
+    <select id="capBac" name="capBac" required>
+        <option value="1">Cấp 1</option>
+        <option value="2">Cấp 2</option>
+        <option value="3">Cấp 3</option>
+    </select><br/>
+
+    <label for="maVL">Mã Việc Làm:</label>
+    <input type="text" id="maVL" name="maVL" required><br/>
+
+    <label for="soNgayCong">Số Ngày Công:</label>
+    <input type="number" id="soNgayCong" name="soNgayCong" required min="1" max="20"><br/>
+
+    <button type="submit">Lưu</button>
+</form>
+<!-- Form thêm việc làm -->
+
+<!-- Nút mở form thêm việc làm -->
+<button onclick="window.location.href = 'addViecLam.html'">Thêm việc làm mới</button>
+
+<h2>Danh Sách Đăng Ký</h2>
+<div class="search-container">
+    <input type="text" id="searchInput" placeholder="Nhập từ khóa...">
+    <select id="searchType">
+        <option value="hoTen">Tìm theo tên</option>
+        <option value="maVL">Tìm theo mã việc làm</option>
+    </select>
+    <button onclick="searchDangKy()">Tìm kiếm</button>
+</div>
+<table id="dangKyTable">
+    <thead>
+    <tr>
+        <th>Mã ĐK</th>
+        <th>Mã NV</th>
+        <th>Họ Tên</th>
+        <th>Giới Tính</th>
+        <th>Cấp Bậc</th>
+        <th>Mã Việc Làm</th>
+        <th>Số Ngày Công</th>
+        <th>Tổng Tiền</th>
+        <th>Hành Động</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Dữ liệu sẽ được load từ JS -->
+    </tbody>
+</table>
+<form id="editForm" style="display: none;">
+    <h2>Chỉnh sửa đăng ký</h2>
+    <input type="hidden" id="maDKEdit">
+    <br/>
+    <label for="maNVEdit">Mã NV:</label>
+    <input type="text" id="maNVEdit" name="maNVEdit" required><br/>
+
+    <label for="hoTenEdit">Họ Tên:</label>
+    <input type="text" id="hoTenEdit" name="hoTenEdit" required><br/>
+
+    <label for="gioiTinhEdit">Giới Tính:</label>
+    <select id="gioiTinhEdit" name="gioiTinhEdit">
+        <option value="Nam">Nam</option>
+        <option value="Nữ">Nữ</option>
+    </select><br/>
+
+    <label for="capBacEdit">Cấp Bậc:</label>
+    <select id="capBacEdit" name="capBacEdit" required>
+        <option value="1">Cấp 1</option>
+        <option value="2">Cấp 2</option>
+        <option value="3">Cấp 3</option>
+    </select><br/>
+
+    <label for="maVLEdit">Mã Việc Làm:</label>
+    <input type="text" id="maVLEdit" name="maVLEdit" required><br/>
+
+    <label for="soNgayCongEdit">Số Ngày Công:</label>
+    <input type="number" id="soNgayCongEdit" name="soNgayCongEdit" required min="1" max="20"><br/>
+
+    <button type="submit">Cập nhật</button>
+    <button type="button" onclick="document.getElementById('editForm').style.display='none'">Hủy</button>
+</form>
+
+<script src="./js/main.js"></script>
+</body>
+</html>

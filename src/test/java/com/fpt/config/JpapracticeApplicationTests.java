@@ -1,4 +1,4 @@
-package com.fpt.jpapractice;
+package com.fpt.config;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

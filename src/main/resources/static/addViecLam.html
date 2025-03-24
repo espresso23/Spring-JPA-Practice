@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Thêm Việc Làm</h1>
+<form id="addViecLamForm">
+    <h2>Thêm việc làm mới</h2>
+    <label for="maVL">Mã việc làm:</label>
+    <input type="text" id="maVL" required>
+    <br/>
+    <label for="moTa">Mô tả:</label>
+    <input type="text" id="moTa" required>
+    <br/>
+    <label for="duAn">Dự án:</label>
+    <input type="text" id="duAn" required>
+    <br/>
+    <label for="ngonNgu">Ngôn ngữ:</label>
+    <input type="text" id="ngonNgu" required>
+    <br/>
+    <label for="ngayBD">Ngày bắt đầu:</label>
+    <input type="date" id="ngayBD" required>
+    <br/>
+    <label for="ngayKT">Ngày bắt đầu:</label>
+    <input type="date" id="ngayKT" required>
+    <br/>
+    <label for="tongNgayCong">Tổng ngày công</label>
+    <input type="number" id="tongNgayCong" required>
+    <br/>
+    <label for="trangThai">Trạng thái:</label>
+    <select id="trangThai">
+        <option value="Open">Open</option>
+        <option value="Closed">Closed</option>
+    </select>
+    <br/>
+    <button type="submit">Lưu</button>
+</form>
+
+</body>
+<script src="./js/main.js"></script>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lỗi hệ thống</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            background-color: #f8f9fa;
+        }
+        .error-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #dc3545;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="error-container">
+    <h1>⚠️ Đã xảy ra lỗi!</h1>
+    <p id="error-message">Không thể xử lý yêu cầu của bạn.</p>
+    <button onclick="window.location.href='/'">Quay về trang chủ</button>
+</div>
+
+<script>
+    // Lấy thông báo lỗi từ URL (nếu có)
+    const urlParams = new URLSearchParams(window.location.search);
+    const errorMessage = urlParams.get('message');
+    if (errorMessage) {
+        document.getElementById('error-message').textContent = decodeURIComponent(errorMessage);
+    }
+</script>
+</body>
+</html>
