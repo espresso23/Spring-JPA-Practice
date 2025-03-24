@@ -135,4 +135,7 @@ public class DangKyLamThemService {
             default -> getAllDangKyLamThemNotClosed();
         };
     }
+    public boolean findByID(String id) {
+        return dangKyLamThemRepository.findById(id).isPresent();
+    }
 }
