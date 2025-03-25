@@ -8,16 +8,30 @@
 
 ## Cấu hình Database
 1. Mở file `src/main/resources/application.properties`
-2. Thay đổi các thông tin kết nối database:
+2. Thay đổi các thông tin kết nối database: dưới đây là mẫu
    ```properties
-   spring.datasource.url=jdbc:sqlserver://YOUR_SERVER_NAME;databaseName=YOUR_DATABASE_NAME;encrypt=true;trustServerCertificate=true
-   spring.datasource.username=YOUR_USERNAME
-   spring.datasource.password=YOUR_PASSWORD
-   ```
-   - Thay `YOUR_SERVER_NAME` bằng tên server SQL của bạn (ví dụ: localhost hoặc tên máy)
-   - Thay `YOUR_DATABASE_NAME` bằng tên database bạn muốn sử dụng
-   - Thay `YOUR_USERNAME` và `YOUR_PASSWORD` bằng thông tin đăng nhập SQL Server của bạn
+    server.servlet.context-path=/spmvc
+    server.port=8080
+    spring.datasource.url=jdbc:sqlserver://PLQTAN\\SQLEXPRESS;databaseName=testSPD;encrypt=true;trustServerCertificate=true
+    spring.datasource.username=sa
+    spring.datasource.password=123
+    spring.jpa.show-sql=true
+    spring.jpa.properties.hibernate.format_sql = true
+    spring.datasource.driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+    ## Hibernate Properties
+    # The SQL dialect makes Hibernate generate better SQL for the chosen database
+    spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.SQLServer2012Dialect
 
+    # Hibernate ddl auto (create, create-drop, validate, update)
+    spring.jpa.hibernate.ddl-auto = update
+    # DEV Tool
+    spring.devtools.restart.enabled=true
+    spring.devtools.livereload.enabled=true
+    # Hidden suffix
+    spring.thymeleaf.prefix=classpath:/templates/
+    spring.thymeleaf.suffix=.html
+    spring.thymeleaf.mode=HTML5
+   ```
 ## Chạy dự án
  Chỉ cần nhấn "Run" là được.
 
