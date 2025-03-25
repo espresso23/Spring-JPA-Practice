@@ -1,6 +1,10 @@
 package com.fpt.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.Date;
 
 @Entity
@@ -12,6 +16,7 @@ public class DangKyLamThem {
     private String maDK;
 
     @Column(name = "MaNV")
+    @NotBlank(message = "Ma NV khong duoc de trong")
     private String maNV;
 
     @Column(name = "HoTen")
@@ -28,6 +33,8 @@ public class DangKyLamThem {
     private ViecLam viecLam;
 
     @Column(name = "SoNgayCong")
+    @Min(value = 1, message = "Số ngày công tối thiểu là 1")
+    @Max(value = 31, message = "Số ngày công tối đa là 31")
     private int soNgayCong;
 
     @Column(name = "TongTien")

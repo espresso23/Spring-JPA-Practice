@@ -30,39 +30,62 @@ public class DangKyLamThemControllerTL {
             model.addAttribute("dangKyLamThem", new DangKyLamThem());
             return "index";
         } catch (Exception e) {
-            e.printStackTrace();
-            return "error";
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
 
-
-    // Hiển thị form thêm mới đăng ký làm thêm
-    @GetMapping("/new")
-    public String showAddForm(Model model) {
-        model.addAttribute("dangKyLamThem", new DangKyLamThem());
-        return "index"; // Trả về trang index.html
-    }
-
+    /**
+     * Xử lý request POST để lưu thông tin đăng ký làm thêm
+     * @param dangKyLamThem Đối tượng chứa dữ liệu từ form đăng ký, được validate tự động
+     * @param result Đối tượng chứa kết quả validate và binding dữ liệu
+     * @param redirectAttributes Đối tượng để truyền dữ liệu qua redirect
+     * @return Chuỗi redirect đến trang đăng ký
+     */
     @PostMapping("/save")
     public String saveDangKyLamThem(
-            @Valid @ModelAttribute DangKyLamThem dangKyLamThem,  // Thêm @Valid
+            // Đối tượng DangKyLamThem được tự động bind từ form data và validate
+            @Valid @ModelAttribute DangKyLamThem dangKyLamThem,
+            // Kết quả validate và binding sẽ được lưu trong result
             BindingResult result,
-            RedirectAttributes redirectAttributes) {//huyển dữ liệu từ một request sang một request khác thông qua redirect. Nó giúp tránh dữ liệu bị mất khi chuyển hướng
+            // Dùng để truyền thông điệp/flash attributes qua redirect
+            RedirectAttributes redirectAttributes) {
 
+        // Kiểm tra nếu có lỗi validate
         if (result.hasErrors()) {
-            // Giữ lại giá trị form và lỗi khi redirect
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.dangKyLamThem", result);
+            // Lưu thông tin lỗi vào flash attribute để giữ lại qua redirect
+            // Spring yêu cầu đặt tên theo quy tắc "org.springframework.validation.BindingResult.[tên model]"
+            redirectAttributes.addFlashAttribute(
+                    "org.springframework.validation.BindingResult.dangKyLamThem",
+                    result);
+
+            // Lưu lại dữ liệu đã nhập để hiển thị lại trên form
             redirectAttributes.addFlashAttribute("dangKyLamThem", dangKyLamThem);
+
+            // Redirect về trang đăng ký để hiển thị lỗi
             return "redirect:/dangky";
         }
 
         try {
+            // Gọi service để lưu dữ liệu vào database
             dangKyLamThemService.saveDangKyLamThem(dangKyLamThem);
-            redirectAttributes.addFlashAttribute("successMessage", "Đăng ký thành công!");
+
+            // Thêm thông báo thành công sẽ hiển thị trên trang đích
+            redirectAttributes.addFlashAttribute(
+                    "successMessage",
+                    "Đăng ký thành công!");
+
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Lỗi hệ thống: " + e.getMessage());
+            // Nếu có lỗi khi lưu, thêm thông báo lỗi
+            redirectAttributes.addFlashAttribute(
+                    "errorMessage",
+                    "Lỗi hệ thống: " + e.getMessage());
+
+            // Đồng thời throw exception để xử lý ở lớp cao hơn (GlobalExceptionHandler)
             throw new RuntimeException("Lỗi khi lưu đăng ký làm thêm: " + e.getMessage(), e);
         }
+
+        // Sau khi xử lý xong, redirect về trang đăng ký
+        // Các flash attributes đã thêm sẽ tự động được truyền qua
         return "redirect:/dangky";
     }
     @GetMapping("/search")
@@ -80,16 +103,6 @@ public class DangKyLamThemControllerTL {
         redirectAttributes.addFlashAttribute("keyword", keyword);
         redirectAttributes.addFlashAttribute("searchType", searchType);
         return "redirect:/dangky";
-    }
-
-
-
-    @GetMapping("/list")
-    public String showList(Model model) {
-        if (!model.containsAttribute("dangKyLamThemList")) {
-            model.addAttribute("dangKyLamThemList", dangKyLamThemService.getAllDangKyLamThemNotClosed());
-        }
-        return "index";
     }
 
     @GetMapping("/edit/{maDK}")
