@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm Việc Làm</title>
+</head>
+<body>
+<h1>Thêm Việc Làm</h1>
+
+<!-- Hiển thị thông báo thành công -->
+<div th:if="${successMessage}" class="alert alert-success"
+     style="color: green; padding: 10px; margin: 10px 0; border: 1px solid green;">
+    <span th:text="${successMessage}"></span>
+</div>
+
+<!-- Hiển thị thông báo lỗi -->
+<div th:if="${errorMessage}" class="alert alert-danger"
+     style="color: red; padding: 10px; margin: 10px 0; border: 1px solid red;">
+    <span th:text="${errorMessage}"></span>
+</div>
+<form th:action="@{/vieclam/addViecLam}" method="post" th:object="${viecLam}">
+    <h2>Thêm việc làm mới</h2>
+
+    <label for="maVL">Mã việc làm:</label>
+    <input type="text" id="maVL" th:field="*{maVL}" required>
+    <br/>
+
+    <label for="moTa">Mô tả:</label>
+    <input type="text" id="moTa" th:field="*{moTa}" required>
+    <br/>
+
+    <label for="duAn">Dự án:</label>
+    <input type="text" id="duAn" th:field="*{duAn}" required>
+    <br/>
+
+    <label for="ngonNgu">Ngôn ngữ:</label>
+    <input type="text" id="ngonNgu" th:field="*{ngonNgu}" required>
+    <br/>
+
+    <label for="ngayBD">Ngày bắt đầu:</label>
+    <input type="date" id="ngayBD" th:field="*{ngayBD}" required>
+    <br/>
+
+    <label for="ngayKT">Ngày kết thúc:</label> <!-- Sửa lại label -->
+    <input type="date" id="ngayKT" th:field="*{ngayKT}" required>
+    <br/>
+
+    <label for="tongNgayCong">Tổng ngày công:</label>
+    <input type="number" id="tongNgayCong" th:field="*{tongNgayCong}" required>
+    <br/>
+
+    <label for="trangThai">Trạng thái:</label>
+    <select id="trangThai" th:field="*{trangThai}">
+        <option value="Open">Open</option>
+        <option value="Closed">Closed</option>
+    </select>
+    <br/>
+
+    <button type="submit">Lưu</button>
+</form>
+<h2>Danh sách Việc Làm Hiện Tại</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Mã VL</th>
+        <th>Mô tả</th>
+        <th>Dự án</th>
+        <th>Ngôn ngữ</th>
+        <th>Ngày bắt đầu</th>
+        <th>Ngày kết thúc</th>
+        <th>Tổng ngày công</th>
+        <th>Trạng thái</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="vl : ${danhSachViecLam}">
+        <td th:text="${vl.maVL}"></td>
+        <td th:text="${vl.moTa}"></td>
+        <td th:text="${vl.duAn}"></td>
+        <td th:text="${vl.ngonNgu}"></td>
+        <td th:text="${vl.ngayBD}"></td>
+        <td th:text="${vl.ngayKT}"></td>
+        <td th:text="${vl.tongNgayCong}"></td>
+        <td th:text="${vl.trangThai}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

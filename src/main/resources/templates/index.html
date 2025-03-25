@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký Làm Thêm</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<p id="errorMessage" style="color: red;" th:text="${errorMessage}"></p>
+
+<h1>Đăng Ký Làm Thêm</h1>
+<div th:if="${successMessage}" class="alert alert-success"
+     style="color: green; padding: 10px; margin: 10px 0; border: 1px solid green;">
+    <span th:text="${successMessage}"></span>
+</div>
+
+<!-- Hiển thị thông báo lỗi -->
+<div th:if="${errorMessage}" class="alert alert-danger"
+     style="color: red; padding: 10px; margin: 10px 0; border: 1px solid red;">
+    <span th:text="${errorMessage}"></span>
+</div>
+<form th:action="@{/dangky/save}" method="post" th:object="${dangKyLamThem}">
+    <label for="maDK">Mã Đăng Kí</label>
+    <input type="text" id="maDK" name="maDK" th:field="*{maDK}" required>
+    <br/>
+    <label for="maNV">Mã NV:</label>
+    <input type="text" id="maNV" name="maNV" th:field="*{maNV}" required><br/>
+
+    <label for="hoTen">Họ Tên:</label>
+    <input type="text" id="hoTen" name="hoTen" th:field="*{hoTen}" required><br/>
+
+    <label for="gioiTinh">Giới Tính:</label>
+    <select id="gioiTinh" name="gioiTinh" th:field="*{gioiTinh}">
+        <option value="Nam">Nam</option>
+        <option value="Nữ">Nữ</option>
+    </select><br/>
+
+    <label for="capBac">Cấp Bậc:</label>
+    <select id="capBac" name="capBac" th:field="*{capBac}" required>
+        <option value="1">Cấp 1</option>
+        <option value="2">Cấp 2</option>
+        <option value="3">Cấp 3</option>
+    </select><br/>
+
+    <label for="maVL">Mã Việc Làm:</label>
+    <input type="text" id="maVL" name="maVL" th:field="*{viecLam.maVL}" required><br/>
+
+    <label for="soNgayCong">Số Ngày Công:</label>
+    <input type="number" id="soNgayCong" name="soNgayCong" th:field="*{soNgayCong}" required min="1" max="20"><br/>
+
+    <button type="submit">Lưu</button>
+</form>
+
+<!-- Nút mở form thêm việc làm -->
+<button th:onclick="|window.location.href='@{/vieclam}'|">Thêm việc làm mới</button>
+
+<h2>Danh Sách Đăng Ký</h2>
+<form th:action="@{/dangky/search}" method="get">
+    <input type="text" name="keyword" placeholder="Nhập từ khóa" th:value="${keyword}">
+    <select name="searchType">
+        <option value="hoTen" th:selected="${searchType == 'hoTen'}">Tên nhân viên</option>
+        <option value="maVL" th:selected="${searchType == 'maVL'}">Mã việc Làm</option>
+    </select>
+    <button type="submit">Tìm kiếm</button>
+</form>
+<div th:if="${keyword != null}" style="margin: 10px 0;">
+    Kết quả tìm kiếm cho: <strong th:text="${keyword}"></strong> (theo <span
+        th:text="${searchType == 'hoTen' ? 'tên nhân viên' : 'mã việc làm'}"></span>)
+    <a th:href="@{/dangky}" style="margin-left: 10px;">Xem tất cả</a>
+</div>
+<table>
+    <thead>
+    <tr>
+        <th>Mã ĐK</th>
+        <th>Mã NV</th>
+        <th>Họ Tên</th>
+        <th>Giới Tính</th>
+        <th>Cấp Bậc</th>
+        <th>Mã Việc Làm</th>
+        <th>Số Ngày Công</th>
+        <th>Tổng Tiền</th>
+        <th>Hành Động</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="dk : ${dangKyLamThemList}">
+        <td th:text="${dk.maDK}"></td>
+        <td th:text="${dk.maNV}"></td>
+        <td th:text="${dk.hoTen}"></td>
+        <td th:text="${dk.gioiTinh}"></td>
+        <td th:text="${dk.capBac}"></td>
+        <td th:text="${dk.viecLam.maVL}"></td>
+        <td th:text="${dk.soNgayCong}"></td>
+        <td th:text="${#numbers.formatInteger(dk.tongTien, 0, 'COMMA') + ' VND'}"></td>
+        <td>
+            <a th:href="@{/dangky/edit/{maDK}(maDK=${dk.maDK})}" class="btn btn-edit">Sửa</a>
+            <a th:href="@{/dangky/delete/{maDK}(maDK=${dk.maDK})}" class="btn btn-delete">Xóa</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<!--<script th:src="@{/js/main.js}"></script>-->
+</body>
+<script>
+    function searchDangKy() {
+        const keyword = document.getElementById('searchInput').value;
+        const type = document.getElementById('searchType').value;
+
+        console.log("Searching with:", keyword, type); // Debug
+
+        window.location.href = `/spmvc/dangky/search?keyword=${encodeURIComponent(keyword)}&searchType=${type}`;
+
+
+    }
+</script>
+</html>

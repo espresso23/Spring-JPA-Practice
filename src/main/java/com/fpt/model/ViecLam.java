@@ -5,6 +5,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -25,10 +27,10 @@ public class ViecLam {
     private String ngonNgu;
 
     @Column(name = "NgayBD")
-    private Date ngayBD;
+    private LocalDate ngayBD;
 
     @Column(name = "NgayKT")
-    private Date ngayKT;
+    private LocalDate  ngayKT;
 
     @Column(name = "TongNgayCong")
     private int tongNgayCong;
@@ -69,19 +71,19 @@ public class ViecLam {
         this.ngonNgu = ngonNgu;
     }
 
-    public Date getNgayBD() {
+    public LocalDate  getNgayBD() {
         return ngayBD;
     }
 
-    public void setNgayBD(Date ngayBD) {
+    public void setNgayBD(LocalDate  ngayBD) {
         this.ngayBD = ngayBD;
     }
 
-    public Date getNgayKT() {
+    public LocalDate  getNgayKT() {
         return ngayKT;
     }
 
-    public void setNgayKT(Date ngayKT) {
+    public void setNgayKT(LocalDate  ngayKT) {
         this.ngayKT = ngayKT;
     }
 

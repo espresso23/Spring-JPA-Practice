@@ -3,25 +3,38 @@ package com.fpt.controller;
 import com.fpt.model.ViecLam;
 import com.fpt.service.ViecLamService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
-
-@RestController
-@RequestMapping("/api/vieclam")
+@Controller
+@RequestMapping("/vieclam")
 public class ViecLamController {
 
     @Autowired
     private ViecLamService viecLamService;
 
-    @PostMapping
-    public ViecLam addViecLam(@RequestBody ViecLam viecLam) {
-        return viecLamService.saveViecLam(viecLam);
+    @GetMapping
+    public String showPage(Model model) {
+        model.addAttribute("viecLam", new ViecLam());
+        model.addAttribute("danhSachViecLam", viecLamService.getAllViecLam()); // Thêm đối tượng rỗng cho form
+        return "addViecLam";
     }
 
-    @GetMapping
-    public List<ViecLam> getAllViecLam() {
-        return viecLamService.getAllViecLam();
+    @PostMapping("/addViecLam")
+    public String addViecLam(@ModelAttribute("viecLam") ViecLam viecLam, RedirectAttributes redirectAttributes) {
+        try {
+            viecLamService.saveViecLam(viecLam);
+            redirectAttributes.addFlashAttribute("successMessage", "Thêm việc làm thành công!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Lỗi " + e.getMessage());
+        }
+        return "redirect:/vieclam";
     }
+
 
 }
