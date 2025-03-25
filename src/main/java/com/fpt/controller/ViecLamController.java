@@ -32,6 +32,7 @@ public class ViecLamController {
             redirectAttributes.addFlashAttribute("successMessage", "Thêm việc làm thành công!");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Lỗi " + e.getMessage());
+
         }
         return "redirect:/vieclam";
     }

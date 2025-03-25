@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @EntityScan("com.fpt.model")
 @EnableJpaRepositories("com.fpt.repository")
-@ComponentScan(basePackages = {"com.fpt.controller", "com.fpt.service"})
+@ComponentScan(basePackages = {"com.fpt.controller", "com.fpt.service", "com.fpt.exception"})
 public class JpapracticeApplication {
 
 	public static void main(String[] args) {

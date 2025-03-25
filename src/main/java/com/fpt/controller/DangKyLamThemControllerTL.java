@@ -47,7 +47,7 @@ public class DangKyLamThemControllerTL {
     public String saveDangKyLamThem(
             @Valid @ModelAttribute DangKyLamThem dangKyLamThem,  // Thêm @Valid
             BindingResult result,
-            RedirectAttributes redirectAttributes) {
+            RedirectAttributes redirectAttributes) {//huyển dữ liệu từ một request sang một request khác thông qua redirect. Nó giúp tránh dữ liệu bị mất khi chuyển hướng
 
         if (result.hasErrors()) {
             // Giữ lại giá trị form và lỗi khi redirect
@@ -61,6 +61,7 @@ public class DangKyLamThemControllerTL {
             redirectAttributes.addFlashAttribute("successMessage", "Đăng ký thành công!");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Lỗi hệ thống: " + e.getMessage());
+            throw new RuntimeException("Lỗi khi lưu đăng ký làm thêm: " + e.getMessage(), e);
         }
         return "redirect:/dangky";
     }
