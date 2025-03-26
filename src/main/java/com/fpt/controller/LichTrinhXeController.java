@@ -1,6 +1,7 @@
 package com.fpt.controller;
 
 import com.fpt.model.LichTrinhXe;
+import com.fpt.model.Xe;
 import com.fpt.service.LichTrinhXeService;
 import com.fpt.service.TuyenXeService;
 import com.fpt.service.XeService;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -38,14 +40,16 @@ public class LichTrinhXeController {
         model.addAttribute("listXe", xeService.getXeList());
         return "lich_trinh_xe";
     }
-
     @GetMapping("/list")
     public String getLichTrinhXeList(Model model) {
         List<LichTrinhXe> lichTrinhXeList = lichTrinhXeService.getLichTrinhXeList();
-        model.addAttribute("listLichTrinhXe", lichTrinhXeList);
+        List<Xe> xeList = xeService.getXeList();
+
+        model.addAttribute("listLichTrinhXe", lichTrinhXeList != null ? lichTrinhXeList : Collections.emptyList());
+        model.addAttribute("listXe", xeList != null ? xeList : Collections.emptyList());
+
         return "listLichTrinhXe";
     }
-
     @GetMapping("/search")
     public String getLichTrinhXeList(@RequestParam("tenNhaXe") String tenNhaXe,
                                      RedirectAttributes redirectAttributes) {
@@ -62,6 +66,26 @@ public class LichTrinhXeController {
         return "redirect:/lichtrinhxe/list";
     }
 
+    @GetMapping("/add/{maXe}")
+    public String showAddFormWithXe(@PathVariable("maXe") String maXe, Model model) {
+        // Lấy thông tin xe
+        Xe xe = xeService.getXeById(maXe);
+        if (xe == null) {
+            return "redirect:/lichtrinhxe?notFoundMessage=Xe không tồn tại";
+        }
+
+        // Tạo đối tượng mới và set xe
+        LichTrinhXe lichTrinhXe = new LichTrinhXe();
+        lichTrinhXe.setXe(xe);
+
+        // Thêm dữ liệu vào model
+        model.addAttribute("lichTrinhXe", lichTrinhXe);
+        model.addAttribute("listTuyenXe", tuyenXeService.getTuyenXeList());
+        model.addAttribute("listXe", xeService.getXeList());
+
+        // Trả về view thay vì redirect
+        return "lich_trinh_xe"; // Tên file HTML của bạn
+    }
     @PostMapping("/add")
     public String addLichTrinhXe(@ModelAttribute("lichTrinhXe") LichTrinhXe lichTrinhXe,
                                  RedirectAttributes redirectAttributes) {
@@ -81,6 +105,6 @@ public class LichTrinhXeController {
             redirectAttributes.addFlashAttribute("errorMessage", "Lỗi: " + e.getMessage());
             e.printStackTrace(); // Log lỗi để debug
         }
-        return "redirect:/lichtrinhxe";
+        return "redirect:/lichtrinhxe/list";
     }
 }

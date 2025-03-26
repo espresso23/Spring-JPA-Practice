@@ -4,39 +4,69 @@
     <meta charset="UTF-8">
     <title>Thống kê thu nhập nhà xe</title>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <style>
+        .money-cell {
+            font-family: 'Courier New', monospace;
+            text-align: right;
+            font-weight: 500;
+        }
+        .total-row {
+            font-weight: bold;
+            background-color: #f8f9fa !important;
+        }
+        .card-header {
+            font-weight: 600;
+        }
+        .table {
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        .table thead th {
+            border-top: none;
+            border-bottom: 2px solid #dee2e6;
+        }
+        .table tfoot td {
+            border-top: 2px solid #dee2e6;
+        }
+    </style>
 </head>
 <body>
 <div class="container mt-4">
     <h1 class="mb-4">Thống kê thu nhập các nhà xe</h1>
 
-    <div class="card">
+    <div class="card shadow-sm">
         <div class="card-header bg-primary text-white">
-            <h4>Tổng hợp doanh thu</h4>
+            <h4 class="mb-0">Tổng hợp doanh thu</h4>
         </div>
-        <div class="card-body">
-            <table class="table table-striped">
-                <thead class="thead-dark">
-                <tr>
-                    <th>Nhà xe</th>
-                    <th>Tổng thu nhập (VND)</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="entry : ${thuNhapNhaXe}">
-                    <td th:text="${entry.key}"></td>
-                    <td th:text="${#numbers.formatDecimal(entry.value, 1, 2, 'COMMA')}"></td>
-                </tr>
-                <tr th:if="${thuNhapNhaXe.isEmpty()}">
-                    <td colspan="2" class="text-center">Không có dữ liệu</td>
-                </tr>
-                </tbody>
-                <tfoot th:if="${not thuNhapNhaXe.isEmpty()}">
-                <tr class="table-info">
-                    <td><strong>Tổng cộng</strong></td>
-                    <td th:text="${#numbers.formatDecimal(#aggregates.sum(thuNhapNhaXe.values()), 1, 2, 'COMMA')}"></td>
-                </tr>
-                </tfoot>
-            </table>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="thead-light">
+                    <tr>
+                        <th class="pl-4">Nhà xe</th>
+                        <th class="text-right pr-4">Tổng thu nhập (VND)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="entry : ${thuNhapNhaXe}">
+                        <td class="pl-4" th:text="${entry.key}"></td>
+                        <td class="money-cell pr-4"
+                            th:text="${'₫' + #numbers.formatDecimal(entry.value, 1, 'COMMA', 2, 'POINT')}"></td>
+                    </tr>
+                    <tr th:if="${thuNhapNhaXe.isEmpty()}">
+                        <td colspan="2" class="text-center py-3">Không có dữ liệu</td>
+                    </tr>
+                    </tbody>
+                    <tfoot th:if="${not thuNhapNhaXe.isEmpty()}">
+                    <tr class="total-row">
+                        <td class="pl-4"><strong>Tổng cộng</strong></td>
+                        <td class="money-cell pr-4">
+                            <span th:text="${'₫' + #numbers.formatDecimal(#aggregates.sum(thuNhapNhaXe.values()), 1, 'COMMA', 2, 'POINT')}"></span>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
         </div>
     </div>
 </div>

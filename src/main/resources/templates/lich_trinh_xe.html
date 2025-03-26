@@ -23,12 +23,7 @@
         <!-- Chọn Xe -->
         <div class="form-group mb-3">
             <label for="maXe">Xe:</label>
-            <select class="form-select" id="maXe" th:field="*{xe.maXe}">
-                <option value="">-- Chọn Xe --</option>
-                <option th:each="xeItem : ${listXe}"
-                        th:value="${xeItem.maXe}"
-                        th:text="${xeItem.bienSo + ' - ' + xeItem.hangSanXuat}"></option>
-            </select>
+            <input class="form-select" id="maXe" th:field="*{xe.maXe}">
         </div>
 
         <!-- Ngày xuất bến -->

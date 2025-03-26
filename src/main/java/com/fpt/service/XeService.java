@@ -46,4 +46,9 @@ public class XeService {
     public List<Xe> getXeList() {
         return xeRepository.findAll();
     }
+
+    public Xe getXeById(String id) {
+        return xeRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Xe không tồn tại"));
+    }
 }
