@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm Nhà Xe Mới</title>
+</head>
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+<body>
+<h1>Thêm Xe Mới</h1>
+<div class="container mt-4">
+    <div th:if="${successMessage}" class="alert alert-success"
+         style="color: green; padding: 10px; margin: 10px 0; border: 1px solid green;">
+        <span th:text="${successMessage}"></span>
+    </div>
+
+    <!-- Hiển thị thông báo lỗi -->
+    <div th:if="${errorMessage}" class="alert alert-danger"
+         style="color: red; padding: 10px; margin: 10px 0; border: 1px solid red;">
+        <span th:text="${errorMessage}"></span>
+    </div>
+    <form th:action="@{/nhaxe/addNhaXe}" method="post" th:object="${nhaXe}">
+        <div class="form-group mb-3">
+            <label for="maNhaXe">Mã Nhà Xe</label>
+            <input type="text" class="form-control" id="maNhaXe" th:field="*{maNhaXe}">
+        </div>
+        <div class="form-group mb-3">
+            <label for="tenNhaXe">Tên Nhà Xe</label>
+            <input type="text" class="form-control" id="tenNhaXe" th:field="*{tenNhaXe}">
+        </div>
+        <div class="form-group mb-3">
+            <label for="namThanhLap">Năm Thành Lập</label>
+            <input type="number" class="form-control" id="namThanhLap" th:field="*{namThanhLap}">
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">Thêm Nhà Xe</button>
+    </form>
+</div>
+</body>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm Loại Xe Mới</title>
+</head>
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+<body>
+<h1>Thêm Xe Mới</h1>
+<div class="container mt-4">
+    <div th:if="${successMessage}" class="alert alert-success"
+         style="color: green; padding: 10px; margin: 10px 0; border: 1px solid green;">
+        <span th:text="${successMessage}"></span>
+    </div>
+
+    <!-- Hiển thị thông báo lỗi -->
+    <div th:if="${errorMessage}" class="alert alert-danger"
+         style="color: red; padding: 10px; margin: 10px 0; border: 1px solid red;">
+        <span th:text="${errorMessage}"></span>
+    </div>
+    <form th:action="@{/loaixe/addLoaiXe}" method="post" th:object="${loaiXe}">
+        <div class="form-group mb-3">
+            <label for="maLoaiXe">Mã Loại Xe</label>
+            <input type="text" class="form-control" id="maLoaiXe" th:field="*{maLoaiXe}">
+        </div>
+  <div class="form-group mb-3">
+            <label for="moTaLoaiXe">Mô tả loại xe</label>
+            <input type="text" class="form-control" id="moTaLoaiXe" th:field="*{moTaLoaiXe}">
+        </div>
+  <div class="form-group mb-3">
+            <label for="soLuongChoNgoi">Số lượng chỗ ngồi</label>
+            <input type="number" class="form-control" id="soLuongChoNgoi" th:field="*{soLuongChoNgoi}">
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">Thêm Loại Xe</button>
+    </form>
+</div>
+</body>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</html>

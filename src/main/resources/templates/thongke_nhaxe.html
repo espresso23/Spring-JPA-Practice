@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thống kê thu nhập nhà xe</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-4">
+    <h1 class="mb-4">Thống kê thu nhập các nhà xe</h1>
+
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4>Tổng hợp doanh thu</h4>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Nhà xe</th>
+                    <th>Tổng thu nhập (VND)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="entry : ${thuNhapNhaXe}">
+                    <td th:text="${entry.key}"></td>
+                    <td th:text="${#numbers.formatDecimal(entry.value, 1, 2, 'COMMA')}"></td>
+                </tr>
+                <tr th:if="${thuNhapNhaXe.isEmpty()}">
+                    <td colspan="2" class="text-center">Không có dữ liệu</td>
+                </tr>
+                </tbody>
+                <tfoot th:if="${not thuNhapNhaXe.isEmpty()}">
+                <tr class="table-info">
+                    <td><strong>Tổng cộng</strong></td>
+                    <td th:text="${#numbers.formatDecimal(#aggregates.sum(thuNhapNhaXe.values()), 1, 2, 'COMMA')}"></td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

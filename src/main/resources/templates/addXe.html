@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm Xe Mới</title>
+</head>
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+<body>
+<h1>Thêm Xe Mới</h1>
+<div class="container mt-4">
+    <div th:if="${successMessage}" class="alert alert-success"
+         style="color: green; padding: 10px; margin: 10px 0; border: 1px solid green;">
+        <span th:text="${successMessage}"></span>
+    </div>
+
+    <!-- Hiển thị thông báo lỗi -->
+    <div th:if="${errorMessage}" class="alert alert-danger"
+         style="color: red; padding: 10px; margin: 10px 0; border: 1px solid red;">
+        <span th:text="${errorMessage}"></span>
+    </div>
+    <form th:action="@{/xe/addXe}" method="post" th:object="${xe}">
+        <div class="form-group mb-3">
+            <label for="maXe">Mã Xe</label>
+            <input type="text" class="form-control" id="maXe" th:field="*{maXe}">
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="hangSanXuat">Hãng Sản Xuất:</label>
+            <input type="text" class="form-control" id="hangSanXuat" th:field="*{hangSanXuat}">
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="maLoaiXe">Loại Xe:</label>
+            <select class="form-select" id="maLoaiXe" th:field="*{loaiXe.maLoaiXe}">
+                <option value="">-- Chọn Loại Xe --</option>
+                <option th:each="loai : ${listLoaiXe}"
+                        th:value="${loai.maLoaiXe}"
+                        th:text="${loai.getMoTaLoaiXe()}"></option>
+            </select>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="bienSo" class="form-label">Biển số <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="bienSo" th:field="*{bienSo}"
+                   placeholder="VD: 81M1-12345"
+                   pattern="\d{2}[A-Z]\d-\d{5}"
+                   title="Biển số phải có dạng: xxYx-xxxxx (x là số, Y là chữ in hoa)"
+                   required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="hanKiemDinh">Hạn Kiểm Định:</label>
+            <input type="date" class="form-control" id="hanKiemDinh" th:field="*{hanKiemDinh}">
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="maNhaXe">Nhà Xe:</label>
+            <select class="form-select" id="maNhaXe" th:field="*{nhaXe.maNhaXe}">
+                <option value="">-- Chọn Nhà Xe --</option>
+                <option th:each="nhaXe : ${listNhaXe}"
+                        th:value="${nhaXe.maNhaXe}"
+                        th:text="${nhaXe.tenNhaXe}"></option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Thêm Xe</button>
+    </form>
+</div>
+</body>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</html>

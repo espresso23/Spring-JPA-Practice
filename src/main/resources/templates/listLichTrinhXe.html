@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách Lịch Trình Xe</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-4">
+    <!-- Thêm thông báo không tìm thấy -->
+    <div th:if="${notFoundMessage}" class="alert alert-warning alert-dismissible fade show">
+        <span th:text="${notFoundMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-header bg-info text-white">
+            <h2>Danh sách Lịch Trình Xe</h2>
+        </div>
+        <div class="card-body">
+            <!-- Form tìm kiếm -->
+            <form th:action="@{/lichtrinhxe/search}" method="get" class="mb-4">
+                <div class="input-group">
+                    <input type="text" name="tenNhaXe" class="form-control"
+                           placeholder="Nhập tên nhà xe" th:value="${searchKeyword}">
+                    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                </div>
+            </form>
+
+            <!-- Bảng dữ liệu -->
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                    <tr>
+                        <th>STT</th>
+                        <th>Biển số xe</th>
+                        <th>Hãng sản xuất</th>
+                        <th>Tuyến xe</th>
+                        <th>Ngày xuất bến</th>
+                        <th>Giờ xuất bến</th>
+                        <th>Tài xế</th>
+                        <th>Số lượng HK</th>
+                        <th>Tên nhà xe</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Sửa lại thứ tự các cột cho đúng -->
+                    <tr th:each="lichTrinh, iterStat : ${listLichTrinhXe}">
+                        <td th:text="${iterStat.index + 1}"></td>
+                        <td th:text="${lichTrinh.xe.bienSo}"></td>
+                        <td th:text="${lichTrinh.xe.hangSanXuat}"></td>
+                        <td th:text="${lichTrinh.tuyenXe.tenTuyen}"></td>
+                        <td th:text="${#temporals.format(lichTrinh.ngayXuatBen, 'dd/MM/yyyy')}"></td>
+                        <td th:text="${#temporals.format(lichTrinh.gioXuatBen, 'HH:mm')}"></td>
+                        <td th:text="${lichTrinh.tenTaiXe}"></td>
+                        <td th:text="${lichTrinh.soLuongHanhKhach}"></td>
+                        <td th:text="${lichTrinh.xe.nhaXe.tenNhaXe}"></td>
+                    </tr>
+                    <tr th:if="${listLichTrinhXe != null and listLichTrinhXe.isEmpty()}">
+                        <td colspan="9" class="text-center text-muted">
+                            <i class="bi bi-exclamation-circle"></i> Không có dữ liệu phù hợp
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

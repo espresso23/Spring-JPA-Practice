@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm Lịch Trình Xe</title>
+</head>
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+<body>
+<h1>Thêm Lịch Trình Xe Mới</h1>
+<div class="container mt-4">
+    <div th:if="${successMessage}" class="alert alert-success"
+         style="color: green; padding: 10px; margin: 10px 0; border: 1px solid green;">
+        <span th:text="${successMessage}"></span>
+    </div>
+
+    <!-- Hiển thị thông báo lỗi -->
+    <div th:if="${errorMessage}" class="alert alert-danger"
+         style="color: red; padding: 10px; margin: 10px 0; border: 1px solid red;">
+        <span th:text="${errorMessage}"></span>
+    </div>
+
+    <form th:action="@{/lichtrinhxe/add}" method="post" th:object="${lichTrinhXe}">
+        <!-- Chọn Xe -->
+        <div class="form-group mb-3">
+            <label for="maXe">Xe:</label>
+            <select class="form-select" id="maXe" th:field="*{xe.maXe}">
+                <option value="">-- Chọn Xe --</option>
+                <option th:each="xeItem : ${listXe}"
+                        th:value="${xeItem.maXe}"
+                        th:text="${xeItem.bienSo + ' - ' + xeItem.hangSanXuat}"></option>
+            </select>
+        </div>
+
+        <!-- Ngày xuất bến -->
+        <div class="form-group mb-3">
+            <label for="ngayXuatBenForm">Ngày xuất bến:</label>
+            <input type="date" class="form-control" id="ngayXuatBenForm" th:field="*{ngayXuatBenForm}">
+        </div>
+
+        <!-- Giờ xuất bến -->
+        <div class="form-group mb-3">
+            <label for="gioXuatBenForm">Giờ xuất bến:</label>
+            <input type="time" class="form-control" id="gioXuatBenForm" th:field="*{gioXuatBenForm}">
+        </div>
+        <!-- Chọn Tuyến xe -->
+        <div class="form-group mb-3">
+            <label for="maTuyen">Tuyến xe:</label>
+            <select class="form-select" id="maTuyen" th:field="*{tuyenXe.maTuyen}">
+                <option value="">-- Chọn Tuyến --</option>
+                <option th:each="tuyen : ${listTuyenXe}"
+                        th:value="${tuyen.maTuyen}"
+                        th:text="${tuyen.tenTuyen}"></option>
+            </select>
+        </div>
+
+        <!-- Tên tài xế -->
+        <div class="form-group mb-3">
+            <label for="tenTaiXe">Tên tài xế:</label>
+            <input type="text" class="form-control" id="tenTaiXe" th:field="*{tenTaiXe}">
+        </div>
+
+        <!-- Số lượng hành khách -->
+        <div class="form-group mb-3">
+            <label for="soLuongHanhKhach">Số lượng hành khách:</label>
+            <input type="number" class="form-control" id="soLuongHanhKhach" th:field="*{soLuongHanhKhach}" min="1">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Thêm Lịch Trình</button>
+    </form>
+</div>
+</body>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</html>
