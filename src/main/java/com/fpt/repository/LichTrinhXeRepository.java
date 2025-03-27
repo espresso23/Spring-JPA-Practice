@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -17,13 +18,13 @@ public interface LichTrinhXeRepository extends JpaRepository<LichTrinhXe, LichTr
     List<LichTrinhXe> findByXe_MaXe(String maXe);
 
     // Tìm lịch trình theo ngày xuất bến
-    List<LichTrinhXe> findByNgayXuatBen(Date ngay);
+    List<LichTrinhXe> findByNgayXuatBen(LocalDate ngay);
 
     // Tìm lịch trình trong khoảng thời gian
     @Query("SELECT l FROM LichTrinhXe l WHERE l.ngayXuatBen BETWEEN :startDate AND :endDate")
     List<LichTrinhXe> findLichTrinhTrongKhoangThoiGian(
-            @Param("startDate") Date startDate,
-            @Param("endDate") Date endDate);
+            @Param("startDate") LocalDate startDate,
+            @Param("endDate") LocalDate endDate);
 
     // Tìm lịch trình theo tuyến xe
     List<LichTrinhXe> findByTuyenXe_MaTuyen(String maTuyen);

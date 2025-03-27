@@ -20,7 +20,7 @@ public class JpapracticeApplication {
 	public static void openHomePage() {
 		Runtime runtime = Runtime.getRuntime();
 		try {
-			runtime.exec("rundll32 url.dll,FileProtocolHandler " + "http://localhost:8080/spmvc/thongke");
+			runtime.exec("rundll32 url.dll,FileProtocolHandler " + "http://localhost:8080/spmvc/benhnhan/list");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

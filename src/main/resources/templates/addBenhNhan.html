@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Benh Nhan</title>
+</head>
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+<body>
+<h1>Thêm Xe Mới</h1>
+<div class="container mt-4">
+    <div th:if="${successMessage}" class="alert alert-success"
+         style="color: green; padding: 10px; margin: 10px 0; border: 1px solid green;">
+        <span th:text="${successMessage}"></span>
+    </div>
+
+    <!-- Hiển thị thông báo lỗi -->
+    <div th:if="${errorMessage}" class="alert alert-danger"
+         style="color: red; padding: 10px; margin: 10px 0; border: 1px solid red;">
+        <span th:text="${errorMessage}"></span>
+    </div>
+    <form th:action="@{/benhnhan/addBenhNhan}" method="post" th:object="${benhNhan}">
+        <div class="form-group mb-3">
+            <label for="maBenNhan">Mã Bệnh Nhân</label>
+            <input type="text" class="form-control" id="maBenNhan" th:field="*{maBenNhan}" required>
+        </div>
+        <div class="form-group mb-3">
+            <label for="tenBenhNhan">Tên Bệnh Nhân</label>
+            <input type="text" class="form-control" id="tenBenhNhan" th:field="*{tenBenhNhan}" required>
+        </div>
+        <div class="form-group mb-3">
+            <label for="soCMND">Số CMND</label>
+            <input type="text" class="form-control" id="soCMND" th:field="*{soCMND}" required>
+        </div>
+        <div class="form-group mb-3">
+            <label for="gioiTinh">Giới Tính</label>
+            <input type="text" class="form-control" id="gioiTinh" th:field="*{gioiTinh}" required>
+        </div>
+        <div class="form-group mb-3">
+            <label for="ngaySinh">Ngày Sinh</label>
+            <input type="date" class="form-control" id="ngaySinh" th:field="*{ngaySinh}" required>
+        </div>
+        <div class="form-group mb-3">
+            <label for="diaChi">Địa Chỉ</label>
+            <input type="text" class="form-control" id="diaChi" th:field="*{diaChi}" required>
+        </div>
+        <div class="form-group mb-3">
+            <label for="soDienThoai">Số Điện Thoại</label>
+            <input type="text" class="form-control" id="soDienThoai" th:field="*{soDienThoai}" required>
+        </div>
+        <div class="form-group mb-3">
+            <label for="maTinhThanh">Mã Tỉnh Thành</label>
+            <input type="text" class="form-control" id="maTinhThanh" th:field="*{tinhThanh.maTinhThanh}" required>
+        </div>
+        <div class="form-group mb-3">
+            <label for="ngayCachLy">Ngày Cách Ly</label>
+            <input type="date" class="form-control" id="ngayCachLy" th:field="*{ngayCachLy}" required>
+        </div>
+        <div class="form-group mb-3">
+            <label for="maDonVi">Mã Đơn Vị</label>
+            <input type="text" class="form-control" id="maDonVi" th:field="*{donViDieuTri.maDonVi}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Thêm Bệnh Nhân</button>
+    </form>
+</div>
+</body>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</html>
