@@ -14,11 +14,11 @@
     </div>
 
     <!-- Hiển thị thông báo lỗi -->
-    <div th:if="${errorMessage}" class="alert alert-danger"
+    <div id="errorMessage" th:if="${errorMessage}" class="alert alert-danger"
          style="color: red; padding: 10px; margin: 10px 0; border: 1px solid red;">
         <span th:text="${errorMessage}"></span>
     </div>
-    <form th:action="@{/benhnhan/addBenhNhan}" method="post" th:object="${benhNhan}">
+    <form id="addBenhNhanForm" th:action="@{/benhnhan/addBenhNhan}" method="post" th:object="${benhNhan}">
         <div class="form-group mb-3">
             <label for="maBenNhan">Mã Bệnh Nhân</label>
             <input type="text" class="form-control" id="maBenNhan" th:field="*{maBenNhan}" required>
@@ -64,4 +64,16 @@
 </div>
 </body>
 <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('addBenhNhanForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            Date = new Date();
+             const ngaySinh = document.getElementById('ngaySinh').value
+            if(ngaySinh > Date.getTime()) {
+                document.getElementById('errorMessage').innerHTML = 'Ngay sinh cua benh nhan phai nho hon ngay hien tai'
+            }
+        });
+    });
+</script>
 </html>

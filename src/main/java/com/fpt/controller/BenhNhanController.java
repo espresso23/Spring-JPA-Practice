@@ -77,15 +77,17 @@ public class BenhNhanController {
         return "editBenhNhan"; // Tên file HTML của bạn
     }
 
-    @PostMapping("/edit")
-    public String editBenhNhan(@RequestParam("maBenhNhan") String maBenhNhan, @ModelAttribute("benhNhan") BenhNhan benhNhan, RedirectAttributes redirectAttributes) {
+    @PostMapping("/update/{maBenhNhan}")
+    public String editBenhNhan(@PathVariable("maBenhNhan") String maBenhNhan, @ModelAttribute("benhNhan") BenhNhan benhNhan, RedirectAttributes redirectAttributes) {
         System.out.println(maBenhNhan);
         try {
             benhNhanService.updateBenhNhan(maBenhNhan, benhNhan);
             redirectAttributes.addFlashAttribute("successMessage", "Updated successfully");
+            return "redirect:/benhnhan/list";
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+            return "redirect:/benhnhan/edit/" + maBenhNhan;
         }
-        return "redirect:/benhnhan/edit/" + maBenhNhan;
+
     }
 }

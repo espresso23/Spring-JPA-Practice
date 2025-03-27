@@ -18,7 +18,7 @@
          style="color: red; padding: 10px; margin: 10px 0; border: 1px solid red;">
         <span th:text="${errorMessage}"></span>
     </div>
-    <form th:action="@{/benhnhan/edit/{maBenhNhan}(maBenhNhan=${benhNhan.maBenNhan})}" method="post" th:object="${benhNhan}">
+    <form th:action="@{/benhnhan/update/{maBenhNhan}(maBenhNhan=${benhNhan.maBenNhan})}" method="post" th:object="${benhNhan}">
         <input type="hidden" class="form-control" name="maBenhNhan" id="maBenNhan" th:field="*{maBenNhan}" required>
         <div class="form-group mb-3">
             <label for="ngayCachLy">Ngày Cách Ly</label>
