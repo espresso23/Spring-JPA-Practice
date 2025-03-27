@@ -38,6 +38,7 @@
         <div class="form-group mb-3">
             <label for="ngaySinh">Ngày Sinh</label>
             <input type="date" class="form-control" id="ngaySinh" th:field="*{ngaySinh}" required>
+            <div id="dateError" class="error"></div>
         </div>
         <div class="form-group mb-3">
             <label for="diaChi">Địa Chỉ</label>
@@ -68,10 +69,9 @@
     document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('addBenhNhanForm').addEventListener('submit', function (event) {
             event.preventDefault();
-            Date = new Date();
              const ngaySinh = document.getElementById('ngaySinh').value
-            if(ngaySinh > Date.getTime()) {
-                document.getElementById('errorMessage').innerHTML = 'Ngay sinh cua benh nhan phai nho hon ngay hien tai'
+            if(!ngaySinh > Date.getTime()) {
+                document.getElementById('dateError').textContent = 'Ngay sinh cua benh nhan phai nho hon ngay hien tai'
             }
         });
     });
