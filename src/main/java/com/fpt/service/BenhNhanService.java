@@ -1,6 +1,8 @@
 package com.fpt.service;
 
 import com.fpt.model.BenhNhan;
+import com.fpt.model.DonViDieuTri;
+import com.fpt.model.TinhThanh;
 import com.fpt.repository.BenhNhanRepository;
 import com.fpt.repository.DonViDieuTriRepository;
 import com.fpt.repository.TinhThanhRepository;
@@ -26,6 +28,9 @@ public class BenhNhanService {
     }
 
     public BenhNhan createBenhNhan(BenhNhan benhNhan) {
+        DonViDieuTri donViDieuTri = donViDieuTriRepository.findById(benhNhan.getDonViDieuTri().getMaDonVi()).orElseThrow(() -> new RuntimeException("Ma don vi khong ton tai trong he thong"));
+        TinhThanh tinhThanh = tinhThanhRepository.findById(benhNhan.getTinhThanh().getMaTinhThanh()).orElseThrow(() -> new RuntimeException("Ma tinh thanh khong ton tai trong he thong"));
+
         return benhNhanRepository.save(benhNhan);
     }
 
@@ -34,7 +39,12 @@ public class BenhNhanService {
     }
 
     public List<BenhNhan> getBenhNhansBySoCMND(String soCMND) {
+        System.out.println(soCMND);
         return benhNhanRepository.getBenhNhansBySoCMND(soCMND);
+    }
+    public BenhNhan getBenhNhansBySoCMND1(String soCMND) {
+        System.out.println(soCMND);
+        return benhNhanRepository.getBenhNhansBySoCMND1(soCMND);
     }
 
     public BenhNhan getBenhNhanById(String id) {

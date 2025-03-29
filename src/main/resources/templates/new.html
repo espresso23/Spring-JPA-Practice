@@ -70,12 +70,48 @@
         document.getElementById('addBenhNhanForm').addEventListener('submit', function (event) {
             const errorMessages = document.querySelectorAll('.error');
             errorMessages.forEach(error => error.textContent = '');
-             const ngaySinh = document.getElementById('ngaySinh').value
+
+            let isValid = true;
+            const fields = [
+                {id: 'maBenNhan', errorId: 'errorMaBenNhan', message: 'Mã bệnh nhân không được để trống'},
+                {id: 'tenBenhNhan', errorId: 'errorTenBenhNhan', message: 'Tên bệnh nhân không được để trống'},
+                {id: 'soCMND', errorId: 'errorSoCMND', message: 'Số CMND không được để trống'},
+                {id: 'gioiTinh', errorId: 'errorGioiTinh', message: 'Giới tính không được để trống'},
+                {id: 'ngaySinh', errorId: 'errorNgaySinh', message: 'Ngày sinh không được để trống'},
+                {id: 'diaChi', errorId: 'errorDiaChi', message: 'Địa chỉ không được để trống'},
+                {id: 'soDienThoai', errorId: 'errorSoDienThoai', message: 'Số điện thoại không được để trống'},
+                {id: 'maTinhThanh', errorId: 'errorMaTinhThanh', message: 'Mã tỉnh thành không được để trống'},
+                {id: 'ngayCachLy', errorId: 'errorNgayCachLy', message: 'Ngày cách ly không được để trống'},
+                {id: 'maDonVi', errorId: 'errorMaDonVi', message: 'Mã đơn vị không được để trống'}
+            ];
+
+            fields.forEach(field => {
+                const input = document.getElementById(field.id);
+                if (!input.value.trim()) {
+                    let errorDiv = document.getElementById(field.errorId);
+                    if (!errorDiv) {
+                        errorDiv = document.createElement('div');
+                        errorDiv.id = field.errorId;
+                        errorDiv.className = 'error text-danger';
+                        input.parentNode.appendChild(errorDiv);
+                    }
+                    errorDiv.textContent = field.message;
+                    isValid = false;
+                }
+            });
+
+            // Kiểm tra ngày sinh
+            const ngaySinh = document.getElementById('ngaySinh').value;
             if (!ngaySinh || new Date(ngaySinh) > new Date()) {
-                document.getElementById('dateError').textContent = 'Ngay sinh cua benh nhan phai nho hon ngay hien tai'
+                document.getElementById('dateError').textContent = 'Ngày sinh phải nhỏ hơn ngày hiện tại';
+                isValid = false;
+            }
+
+            if (!isValid) {
                 event.preventDefault();
             }
         });
     });
 </script>
+
 </html>

@@ -12,4 +12,7 @@ import java.util.List;
 public interface BenhNhanRepository extends JpaRepository<BenhNhan, String> {
     @Query("SELECT b from BenhNhan b where b.soCMND = :soCMND")
     List<BenhNhan> getBenhNhansBySoCMND(@Param("soCMND") String soCMND);
+
+    @Query("SELECT b from BenhNhan b where b.soCMND = :soCMND")
+    BenhNhan getBenhNhansBySoCMND1(@Param("soCMND") String soCMND);
 }
